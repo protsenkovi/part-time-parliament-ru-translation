@@ -1,0 +1,226 @@
+\ProvidesPackage{derradeiro}
+
+\newif\if@literat
+\DeclareOption{literat}{\@literattrue}
+\DeclareOption{noliterat}{\@literatfalse}
+\newif\if@microtype
+\DeclareOption{microtype}{\@microtypetrue}
+\DeclareOption{nomicrotype}{\@microtypefalse}
+\newif\if@redcolor
+\DeclareOption{redcolor}{\@redcolortrue}
+\newif\if@bluecolor
+\DeclareOption{bluecolor}{\@bluecolortrue}
+\newif\if@nocolor
+\DeclareOption{nocolor}{\@nocolortrue}
+\newif\if@sans
+\DeclareOption{sans}{\@sanstrue}
+
+\ExecuteOptions{ literat, microtype }
+\ProcessOptions
+
+% Support use of the Raph Smith’s Formal Script font in mathematics.
+% Provides a \mathscr command, rather than overwriting the standard \mathcal command, as in calrsfs.
+% \RequirePackage{mathrsfs}
+
+
+
+% The Latin Modern family of fonts consists of 72 text fonts and 20 mathematics fonts, 
+% and is based on the Computer Modern fonts released into public domain by AMS (copyright © 1997 AMS). 
+%
+% \RequirePackage[T1]{fontenc} 
+% \RequirePackage{lmodern}
+
+
+
+% Since such changes are often closely related to other language-dependent settings,
+% it is often sensible to use the babel system, which provides further useful
+% ‘localisation’ and standardised multi-lingual interfaces (for further details, see
+% Section 2.3). Then you can use lines like the following in your document:
+%   \usepackage[koi8-r]{inputenc}
+%   \usepackage[russian]{babel}
+% This will automatically choose the default font encoding for Russian, which is
+% T2A, if available. Documentation of the complete set of font-enc
+%
+% http://latex-project.org/guides/cyrguide.pdf
+
+\RequirePackage[utf8]{inputenc}
+\RequirePackage[russian]{babel}
+
+
+
+
+
+\RequirePackage{ 
+    multicol,
+    multirow, 
+    floatflt,
+    grffile,
+    mathrsfs,
+    cmap, 
+    indentfirst, 
+    hyphenat
+}
+\RequirePackage{amsmath}
+
+\RequirePackage{verse}
+
+% Добавление изображений в документ
+% \includegraphics
+% \RequirePackage{graphicx} 
+% \graphicspath{{images/}}
+
+% Code snippets
+\RequirePackage{listings}
+
+% Размер страницы, отступы на странице
+\RequirePackage{geometry}
+\geometry{
+    a5paper,
+    left=1.5cm,
+    right=1cm,
+    top=2.3cm,
+    bottom=2cm
+}
+
+%\parindent=7mm
+%\setlength{\leftmargini}{24pt}
+
+\RequirePackage{fancyhdr} 
+%\RequirePackage{fancyvrb}
+\lhead{\rightmark}
+\chead{}
+\rhead{\bfseries\thepage}
+\cfoot{}
+\renewcommand{\headrulewidth}{0.4pt}
+\pagestyle{fancy}
+%\usepackage[T2A]{utf8}
+
+%\if@literat
+    \RequirePackage{literat}
+%\fi
+%\if@microtype
+    % http://www.khirevich.com/latex/microtype/
+    % http://www.khirevich.com/latex/microtype/Microtype_example_ani.gif
+%    \RequirePackage{microtype}
+%    \SetProtrusion
+%{
+%    encoding = T2C,
+%    family = *
+%}
+%{
+%    « = {900,     },
+%    » = {    , 900},
+%    „ = {1000,     },
+%    “ = {    , 1000},
+%    ( = {400,     },
+%    ) = {    , 400},
+%    ! = {    , 1000},
+%    ? = {    , 1000},
+%    : = {    , 1000},
+%    ; = {    , 1000},
+%    . = {    , 1000},
+%    - = {    ,  700},
+%    {,}= {    , 1000}
+%}
+%\DeclareMicrotypeSet{t2atext}{encoding=T1}
+%    \UseMicrotypeSet{t2atext}
+%\fi
+
+% Protrusion - enables characters to cross the margin edge in order to increase 
+% uniformity of the optical appearance of text boundaries.
+%
+% http://en.wikipedia.org/wiki/Hanging_punctuation
+
+
+% Microtype tracking
+%
+% \usepackage[tracking=true]{microtype}
+% \SetTracking{encoding={*}, shape=sc}{40} 
+%
+% http://www.artlebedev.ru/kovodstvo/sections/142/
+
+
+% misccorr
+% Based on `russcorr' by Serge Lvovski and other sources.
+% This package should be used IN ADDITION to BABEL's `russian' option.
+% Точки после номера раздела и тд.
+\RequirePackage{misccorr}
+
+
+\RequirePackage{color}
+
+\definecolor{mylinkcolor}{RGB}{0, 51, 102}
+\definecolor{mycitecolor}{RGB}{53, 75, 94}
+\definecolor{myfilecolor}{RGB}{53, 75, 94}
+\definecolor{myurlcolor}{RGB}{0, 51, 102}
+
+\RequirePackage[
+    pdftex, 
+    unicode, 
+    pdfborder = {0 0 0}, 
+    colorlinks=true,
+    linkcolor=mylinkcolor,
+    citecolor=mycitecolor, 
+    filecolor=myfilecolor,
+    urlcolor=myurlcolor
+]{hyperref}
+
+\RequirePackage[labelsep=endash]{caption}
+
+\hyphenpenalty=6000
+\tolerance=5000
+
+\if@nocolor
+\definecolor{sections}{rgb}{0,0,0}
+\definecolor{subsections}{rgb}{0,0,0}
+\definecolor{subsubsections}{rgb}{0,0,0}
+\fi
+
+% Math theorems
+\newtheorem{lemma}{Лемма}[section]
+\newtheorem{theorem}{Теорема}[section]
+
+% 
+\renewcommand{\thetheorem}{\bfseries\textcolor[rgb]{0.0,0.0,0.0}{\arabic{theorem}}}
+\renewcommand{\thelemma}{\textcolor[rgb]{0.0,0.0,0.0}{}}
+
+\newenvironment{theoremproof}
+{\normalfont\par\noindent{\bfseriesДоказательство теоремы\\}}
+{\par\noindent{\bfseriesКонец доказательства теоремы}\smallskip\par}
+
+\newenvironment{lemmaproof}
+{\normalfont\par\noindent{\bfseriesДоказательство леммы\\}}
+{\par\noindent{\bfseriesКонец доказательства леммы}\smallskip\par}
+
+
+\renewcommand{\section}{\@startsection{section}{1}{0pt}{-3.5explus-1exminus-.2ex}{2.3explus.2ex}{\color{sections}\normalfont\Large\bfseries
+\if@sans
+\sffamily
+\fi}}
+\renewcommand{\subsection}{\@startsection{subsection}{1}{0pt}{-3.0ex plus -1ex minus-.2ex}{1.7ex plus.2ex}{\color{subsections}\normalfont\large\bfseries
+\if@sans
+\sffamily
+\fi}}
+\renewcommand{\subsubsection}{\@startsection{subsubsection}{1}{0pt}{-3.0ex plus -1ex minus-.2ex}{1.7ex plus.2ex}{\color{subsubsections}\normalfont\large\bfseries
+\if@sans
+\sffamily
+\fi}}
+\abovedisplayskip=.5\abovedisplayskip
+\belowdisplayskip=.5\belowdisplayskip
+
+% No enumeration for all headers from depth 0
+%\setcounter{secnumdepth}{0}
+
+
+% The \flushbottom declaration makes all text pages the same height, adding extra vertical space when necessary to fill out the page.
+\flushbottom
+
+\newcommand{\centerblock}[1]{
+ \begin{center}
+  \begin{minipage}[c]{0,9\textwidth}
+  %\begin{center}
+    #1
+  %\end{center}
+ \end{minipage}
+\end{center}
+}
